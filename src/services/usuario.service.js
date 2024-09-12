@@ -14,7 +14,17 @@ const CrearUsuario = async function (UsuarioData) {
     }
 }
 
+(async () => {
+    try {
+        const usuarios = await listarUsuarios();
+        console.log('Usuarios:', usuarios);
+    } catch (error) {
+        console.error('Error al listar usuarios:', error);
+    }
+})();
+
 
 module.exports ={
-    CrearUsuario
+    CrearUsuario,
+    listarUsuarios
 }
