@@ -54,13 +54,23 @@ const ActualizarUser = async function(idUsuario, NuevoUsuario){
     }
 }
 
-
+const ListarUser = async function () {
+    try{
+        const users = await Usuario.findAll();
+        return users;
+    }
+    catch (error) {
+        throw error;
+    }
+    
+}
 
 
 module.exports ={
     CrearUsuario,
     ActualizarUser,
-    ListarUsuarios
+    ListarUsuarios,
+    ListarUser
 }
 
 /*

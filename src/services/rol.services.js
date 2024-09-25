@@ -2,7 +2,7 @@ const RolUsuario = require('../models/rol.model');
 
 
 const CrearRol = async function(rolData) {
-    if (!rolData.identificacion || !rolData.rol || !rolData.nombre || !rolData.apellido){
+    if ( !rolData.rol){
         throw new Error('Todos los campos son requeridos');
     }
     try{
@@ -14,42 +14,52 @@ const CrearRol = async function(rolData) {
     }
 }
 
-// const ActulizarRol = async function(idRol, nuevoRol) {
-//     try{
-//         const rolActualizado = await RolUsuario.editRol(idRol, nuevoRol);
-//         if (!rolActualizado){
-//             throw new Error('No se pudo actualizar el rol, o el rol no existe.');
-//         }
-//         return rolActualizado;
-//     }
-//     catch (error) {
-//         throw error;
-//     }
-
-// }
-
-const EditRol = async function(idRol, NuevoRol) {
+const ActulizarRol = async function(id, nuevoRol) {
     try{
-        const rolActualizado = await RolUsuario.findByPk(idRol);
-        if (!rolActualizado) {
+        console.log(nuevoRol)
+        const rolActualizado = await RolUsuario.editRol(id, nuevoRol);
+        if (!rolActualizado){
             throw new Error('No se pudo actualizar el rol, o el rol no existe.');
         }
-        rolActualizado.set({
-            rol: NuevoRol.rol,
-            nombre: NuevoRol.nombre,
-            apellido: NuevoRol.apellido
-        });
-        await rolActualizado.save();
         return rolActualizado;
+       
     }
     catch (error) {
         throw error;
     }
+
 }
 
-const ListarUsuRol = async function (rolData) {
+// const EditRol = async function(idRol, NuevoRol) {
+
+
+//     try {console.log('NuevoRol')
+
+//         const existente = await RolUsuario.findByPk(idRol);
+//         if (!existente) {
+//             throw new Error('No se pudo actualizar el rol, o el rol no existe.');
+//         }
+        
+//         // const rolActualizado = { ...existente, ...NuevoRol}
+//         // if (existente.idRol === idRol){
+//         // await RolUsuario.editRol(idRol, NuevoRol);
+//         // console.log('NuevoRol')
+//         // console.log(rolActualizado)
+
+
+//         //     await rolActualizado;
+//         //     return rolActualizado;
+//         // }
+        
+//     }
+//     catch (error) {
+//         throw error;
+//     }
+// }
+
+const ListarUsuRol = async function () {
     try{
-        const roles = await RolUsuario.findAll(rolData);
+        const roles = await RolUsuario.findAll();
         return roles;
     }
     catch (error) {
@@ -60,9 +70,9 @@ const ListarUsuRol = async function (rolData) {
 
 module.exports = {
     CrearRol,
-    // ActulizarRol,
+    ActulizarRol,
     ListarUsuRol,
-    EditRol
+    // EditRol
 }
 
 

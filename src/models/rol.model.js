@@ -7,24 +7,25 @@ const Rol = {
   },
 
   create: async function(rolData) {
-    if (!rolData.identificacion || !rolData.rol || !rolData.nombre || !rolData.apellido) {
+    if (!rolData.rol ) {
       throw new Error('Todos los campos son requeridos');
     }
 
-    const rol = `INSERT INTO Rol (identificacion, rol, nombre, apellido)
-      VALUES (?, ?, ?, ?)`;
-    return pool.execute(rol, [rolData.identificacion, rolData.rol, rolData.nombre, rolData.apellido]);
+    const rol = `INSERT INTO Rol (rol)
+      VALUES (?)`;
+    return pool.execute(rol, [rolData.rol]);
   },
 
-  findOneRol: async function(idRol) {
+  findByPk: async function(idRol) {
     return await pool.execute('SELECT * FROM Rol where idRol = ?', [idRol]);
   },
 
-  editRol: async function(idRol, nuevoRol) {
+  editRol: async function(id, nuevoRol) {
     try {
       const [result] = await pool.execute(
-        `UPDATE Rol SET identificacion = ?, rol = ?, nombre = ?, apellido = ? WHERE idRol = ?`,
-        [nuevoRol.identificacion, nuevoRol.rol, nuevoRol.nombre, nuevoRol.apellido, idRol]
+        `UPDATE Rol SET  rol = ? WHERE idRol = ?`,
+        [nuevoRol.rol],
+        console.log(nuevoRol)
       );
       if (result.affectedRows === 0) {
         throw new Error('No se encontró el rol');
