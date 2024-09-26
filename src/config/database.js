@@ -6,7 +6,7 @@ const pool = mysql.createConnection({
     user: 'root',
     password: 'root',
     database: 'backend',
-
+    
 });
 
 pool.query('SELECT 1 + 1 AS solution', function(err, rows){
