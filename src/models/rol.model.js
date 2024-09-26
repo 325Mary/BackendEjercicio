@@ -16,15 +16,15 @@ const Rol = {
     return pool.execute(rol, [rolData.identificacion, rolData.rol, rolData.nombre, rolData.apellido]);
   },
 
-  findOneRol: async function(idRol) {
+  findByPk: async function(idRol) {
     return await pool.execute('SELECT * FROM Rol where idRol = ?', [idRol]);
   },
 
   editRol: async function(idRol, nuevoRol) {
     try {
       const [result] = await pool.execute(
-        `UPDATE Rol SET identificacion = ?, rol = ?, nombre = ?, apellido = ? WHERE idRol = ?`,
-        [nuevoRol.identificacion, nuevoRol.rol, nuevoRol.nombre, nuevoRol.apellido, idRol]
+        `UPDATE Rol SET  rol = ? WHERE idRol = ?`,
+        [nuevoRol.rol, idRol]
       );
       if (result.affectedRows === 0) {
         throw new Error('No se encontró el rol');

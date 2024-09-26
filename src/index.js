@@ -1,4 +1,5 @@
-const Backend = require('../src/config/server');
+//llamados de las constantes de database y server (pool y bakend)
+ const Backend = require('../src/config/server');
  const pool = require('../src/config/database');
 
 

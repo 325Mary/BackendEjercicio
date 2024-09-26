@@ -2,13 +2,6 @@
 const express = require('express');
 const router = express.Router();
 
-const {
-    //funciones del controller para la tabla usuarios
-    CrearUserC, 
-    ActualizarUserC, 
-    ListarUsuariosC,
-     GetUserByEmailC, BuscarUsuarioporid
-} = require('../controllers/usuario.controller')
 
 const {
     //funciones del controller pare la tabla rol
@@ -17,11 +10,6 @@ const {
     ListarUsuRolC
 } = require('../controllers/rol.controller')
 
-//metodos para ejecutar la tabla usuarios
-router.get('/listarUsuarios', ListarUsuariosC);
-router.post('/crearUser', CrearUserC);
-router.put('/actualizarUsers/:id', ActualizarUserC);
-
 //metodos para ejecutar la tabla rol
 router.get('/listarUsuRol', ListarUsuRolC)
 router.post('/crearRol', CrearRolC);
@@ -29,7 +17,6 @@ router.put('/actualizarRol/:id', EditRolC);
 
 
 router.get('/obtenerUsuarioPorEmail/:email', GetUserByEmailC);
-router.get('/buscarUser/:id',BuscarUsuarioporid);
 
 module.exports = router
 

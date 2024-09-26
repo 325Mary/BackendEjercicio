@@ -1,13 +1,13 @@
-//define un modelo de usuario que se encarga de interactuar con la base de datos para realizar operaciones CRUD 
-//(Crear, Leer, Actualizar, Eliminar) sobre los usuarios.
-
+//consultas a la base de datos de mysql2 
 const pool = require('../config/database');
 const mysql = require('mysql2');
 
 const Usuario = {
-    findAll : async function () {//función asíncrona que devuelve todos los usuarios de la base de datos
+    //funcion para mostrar todo de la tabla usuarios, funciona asincronica nos retorna una consulta
+    findAll : async function () {
         return await pool.execute('SELECT * FROM Usuario');
     } ,
+    //
     create : async function (UsuarioData) {
         if (!UsuarioData.identificacion || !UsuarioData.nombre || !UsuarioData.apellido || !UsuarioData.email || !UsuarioData.contrasena || !UsuarioData.direccion || !UsuarioData.fecha_nacimiento) {
             throw new Error('Todos los campos son requeridos');

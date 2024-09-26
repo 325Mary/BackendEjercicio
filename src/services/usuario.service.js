@@ -1,12 +1,47 @@
+//manejamos las solicitudes
 const Usuario = require('../models/usuario.model');
+const jwt = require('jsonwebtoken');
+const bCrypt = require('bcrypt');
 
+//exportamos las funciones
 
-const CrearUsuario = async function (UsuarioData) {
-    if (!UsuarioData.identificacion || !UsuarioData.nombre || !UsuarioData.apellido || !UsuarioData.email || !UsuarioData.contrasena || !UsuarioData.direccion || !UsuarioData.fecha_nacimiento) {
-        throw new Error('Todos los campos son requeridos');
-    }
-
+//funcion para filtrar usuario por su id 
+const ObtenerUsuarioPorId = async function (idUsuario) {
     try {
+        const usuario = await Usuario.findByPk(idUsuario);
+        if (!usuario) {
+            throw new Error('No se encontró el usuario.');
+        }
+        return usuario;
+    } catch (error) {
+        throw error;
+    }
+}
+
+// funcion para listar usuarios de la Bd
+const ListarUsuarios = async function (){
+    try {
+        const usuarios = await Usuario.findAll({});
+        return usuarios;
+    } catch (error) {
+        throw error;
+    }
+}
+const CrearUsuario = async function (UsuarioData) {
+    
+    try {
+        if (!UsuarioData) {
+            throw new Error('Todos los campos son requeridos');
+        }
+
+        const Password = UsuarioData.identificacion;
+        if(!Password){
+            throw new error;
+        }
+
+        const PasswordEncripted = await bCrypt.hash(Password, 10);
+        UsuarioData.contrasena = PasswordEncripted;
+
         const usuarioCreado = await Usuario.create(UsuarioData);
         return usuarioCreado;
     } catch (error) {
@@ -42,9 +77,28 @@ const getUserByEmail = async (email) => {
     } 
 }
 
+const BuscarUsuarioporid = async function(idUsuario){
+    try{
+         
+        const buscandousuario = await Usuario.findOneUsuario(idUsuario);
+
+        if (!buscandousuario) {
+            throw new Error('No se pudo actualizar el usuario, o el usuario no existe.');
+        }
+
+        return buscandousuario;
+        
+    }catch(error){
+        throw error;
+    }
+}
+
+
 module.exports ={
     CrearUsuario,
     ActualizarUser,
+    BuscarUsuarioporid ,
+    ListarUsuarios,
     getUserByEmail
 }
 
