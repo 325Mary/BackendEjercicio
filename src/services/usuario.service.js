@@ -1,8 +1,32 @@
+//manejamos las solicitudes
 const Usuario = require('../models/usuario.model');
 const bcrypt  = require("bcrypt")
 const jwt = require("jsonwebtoken")
 
+//exportamos las funciones
 
+//funcion para filtrar usuario por su id 
+const ObtenerUsuarioPorId = async function (idUsuario) {
+    try {
+        const usuario = await Usuario.findByPk(idUsuario);
+        if (!usuario) {
+            throw new Error('No se encontró el usuario.');
+        }
+        return usuario;
+    } catch (error) {
+        throw error;
+    }
+}
+
+// funcion para listar usuarios de la Bd
+const ListarUsuarios = async function (UsuarioData){
+    try {
+        const usuarios = await Usuario.findAll({});
+        return usuarios;
+    } catch (error) {
+        throw error;
+    }
+}
 const CrearUsuario = async function (UsuarioData) {
     
 
@@ -39,7 +63,18 @@ const ActualizarUser = async function(idUsuario, NuevoUsuario){
         throw error;
     }
 }
-
+const getUserByEmail = async (email) => {
+    try {
+        
+        const [rows] = await Usuario.findUserByEmail(email);
+        if (rows.length === 0) {
+            throw new Error('Usuario no encontrado');
+        }
+        return rows[0]; 
+    } catch (error) {
+        throw error; 
+    } 
+}
 
 const BuscarUsuarioporid = async function(idUsuario){
     try{
@@ -61,5 +96,26 @@ const BuscarUsuarioporid = async function(idUsuario){
 module.exports ={
     CrearUsuario,
     ActualizarUser,
-    BuscarUsuarioporid 
+    BuscarUsuarioporid ,
+    ListarUsuarios,
+    getUserByEmail
 }
+
+/*
+define un servicio para crear usuarios en una aplicación Node.js. La función CrearUsuario valida los datos del usuario, 
+crea un nuevo usuario en la base de datos utilizando el modelo Usuario y maneja errores durante el proceso.
+*/
+
+/*const CrearRol = async function (rolData) {
+    if (!rolData.nombreRol || !rolData.descripcionRol) {
+        throw new Error('Todos los campos son requeridos');
+    }
+    const rol = `INSERT INTO Rol (nombreRol, descripcionRol)
+        VALUES (?, ?)`;
+    return pool.execute(rol, [rolData.nombreRol, rolData.descripcionRol]);
+};
+
+module.exports ={
+    CrearUsuario,
+    CrearRol
+}*/
