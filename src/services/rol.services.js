@@ -22,7 +22,6 @@ const ActulizarRol = async function(id, nuevoRol) {
             throw new Error('No se pudo actualizar el rol, o el rol no existe.');
         }
         return rolActualizado;
-       
     }
     catch (error) {
         throw error;
@@ -30,32 +29,20 @@ const ActulizarRol = async function(id, nuevoRol) {
 
 }
 
-// const EditRol = async function(idRol, NuevoRol) {
+const EditRol = async function(idRol, NuevoRol) {
+    try {
+        const rolActualizado= {...idRol, ...NuevoRol}
+        await RolUsuario.editRol(idRol, rolActualizado);
 
+        return rolActualizado;
 
-//     try {console.log('NuevoRol')
-
-//         const existente = await RolUsuario.findByPk(idRol);
-//         if (!existente) {
-//             throw new Error('No se pudo actualizar el rol, o el rol no existe.');
-//         }
         
-//         // const rolActualizado = { ...existente, ...NuevoRol}
-//         // if (existente.idRol === idRol){
-//         // await RolUsuario.editRol(idRol, NuevoRol);
-//         // console.log('NuevoRol')
-//         // console.log(rolActualizado)
+    }
+    catch (error) {
+        throw error;
+    }
+}
 
-
-//         //     await rolActualizado;
-//         //     return rolActualizado;
-//         // }
-        
-//     }
-//     catch (error) {
-//         throw error;
-//     }
-// }
 
 const ListarUsuRol = async function () {
     try{
@@ -72,7 +59,7 @@ module.exports = {
     CrearRol,
     ActulizarRol,
     ListarUsuRol,
-    // EditRol
+    EditRol
 }
 
 

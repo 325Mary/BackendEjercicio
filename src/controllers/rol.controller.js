@@ -22,7 +22,7 @@ controller.ActulizarRolC = async function (req, res) {
         const nuevoRol = req.body;
         const id = req.params.id;
         console.log(nuevoRol)
-        const user = await ActulizarRol(id, nuevoRol)
+        const user = await EditRol(id, nuevoRol)
         return res.status(201).json(user);
        
     }

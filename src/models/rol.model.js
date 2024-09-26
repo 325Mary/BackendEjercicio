@@ -20,12 +20,12 @@ const Rol = {
     return await pool.execute('SELECT * FROM Rol where idRol = ?', [idRol]);
   },
 
-  editRol: async function(id, nuevoRol) {
+  editRol: async function(idRol, nuevoRol) {
     try {
       const [result] = await pool.execute(
         `UPDATE Rol SET  rol = ? WHERE idRol = ?`,
-        [nuevoRol.rol],
-        console.log(nuevoRol)
+        [nuevoRol.rol, idRol],
+        console.log(nuevoRol.rol, idRol)
       );
       if (result.affectedRows === 0) {
         throw new Error('No se encontró el rol');
