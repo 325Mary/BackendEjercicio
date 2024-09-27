@@ -20,6 +20,9 @@ const Usuario = {
     findOneUsuario: async function (idUsuario) {//devuelve un usuario específico por su ID.
        return await pool.execute('SELECT * FROM Usuario where idUsuario = ?', [idUsuario]);
     },
+    findUserByEmail: async (email) =>{
+        return pool.execute('SELECT * FROM Usuario where email = ?', [ email ])
+    },
     editUsuario: async function (idUsuario, NuevoUsuario) {//actualiza un usuario existente en la base de datos
         try{
             const [result] = await pool.execute(

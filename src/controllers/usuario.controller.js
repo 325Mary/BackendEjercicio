@@ -1,4 +1,4 @@
-const {CrearUsuario, ActualizarUser, ListarUsuarios} = require('../services/usuario.service')
+const {CrearUsuario, ActualizarUser, ListarUsuarios, getUserByEmail,BuscarUsuarioporid, Login} = require('../services/usuario.service')
 const validarCamposRequeridos = require('../middleware/camposRequeridos');
 const controller = {}; //define el controlador
 
@@ -16,12 +16,12 @@ controller.ListarUsuariosC = async function (req, res) {
 controller.CrearUserC = async function (req, res) {
     try {
         // Validar los campos del usuario
-        validarCamposRequeridos(['identificacion', 'nombre', 'apellido','email', 'contrasena', 'direccion', 'fecha_nacimiento']) (req, res, async()=>{
+        validarCamposRequeridos(['identificacion', 'nombre', 'apellido','email', 'direccion', 'fecha_nacimiento']) (req, res, async()=>{
 
         
         const usuarioData = req.body; //valida los campos de usuarios
 
-        if (!usuarioData.identificacion || !usuarioData.nombre || !usuarioData.apellido || !usuarioData.email || !usuarioData.contrasena || !usuarioData.direccion || !usuarioData.fecha_nacimiento) {
+        if (!usuarioData.identificacion || !usuarioData.nombre || !usuarioData.apellido || !usuarioData.email || !usuarioData.direccion || !usuarioData.fecha_nacimiento) {
             return res.status(400).json({ error: 'Todos los campos son requeridos' });
         }
 
@@ -33,6 +33,15 @@ controller.CrearUserC = async function (req, res) {
     }
 }
 
+controller.LoginC = async function (req, res) {
+    try{
+        await Login(req, res);
+    }
+    catch (error){
+        res.status(500)
+    }
+}
+
 controller.ActualizarUserC = async function (req, res) {
     try{
         const usuarioDatos = req.body;
@@ -40,6 +49,41 @@ controller.ActualizarUserC = async function (req, res) {
 
         // Llamar al servicio para actualizar el usuario
         const user = await ActualizarUser(idUsuario, usuarioDatos)
+
+        // Enviar la respuesta
+        return res.status(201).json(user);
+    }catch(error){
+        res.status(500).json({error: error.message})
+
+    }
+    
+}
+controller.GetUserByEmailC = async (req, res) => {
+
+    const { email } = req.params;
+
+    try {
+        const usuario = await getUserByEmail(email);
+        res.status(200).json(usuario);
+    } catch (error) {
+        if (error.message === 'Usuario no encontrado') {
+            return res.status(404).json({ error: 'Usuario no encontrado' });
+        }
+        res.status(500).json({ error: error.message });
+    }
+}
+module.exports = controller;
+
+
+controller.BuscarUsuarioporid= async function (req, res) {
+    try{
+        const idUsuario = req.params.id;
+
+       
+
+
+        // Llamar al servicio para actualizar el usuario
+        const user = await BuscarUsuarioporid(idUsuario)
 
         // Enviar la respuesta
         return res.status(201).json(user);

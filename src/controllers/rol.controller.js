@@ -2,7 +2,20 @@ const {CrearRol, ActulizarRol, ListarUsuRol, EditRol} = require('../services/rol
 const validarCamposRequeridos = require('../middleware/camposRequeridos');
 const controller = {};
 
-// controller.EditRolC = async function (req, res) {
+controller.EditRolC = async function (req, res) {
+    try{
+        const rolDatos = req.body;
+        const idRol = req.params.id;
+
+        const user = await EditRol(idRol, rolDatos)
+        return res.status(201).json({message: 'perfil actualizado exitosamente', data: user });
+    }
+    catch (error){
+        res.status(500).json({error: error.message});
+    }
+}
+
+// controller.ActulizarRolC = async function (req, res) {
 //     try{
 //         const rolDatos = req.body;
 //         const idRol = req.params.id;

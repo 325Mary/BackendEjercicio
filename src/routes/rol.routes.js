@@ -2,9 +2,10 @@
 const express = require('express');
 const router = express.Router();
 
+
 const {
     //funciones del controller pare la tabla rol
-    ActulizarRolC,
+    EditRolC,
     CrearRolC,
     ListarUsuRolC
 } = require('../controllers/rol.controller')
@@ -12,6 +13,11 @@ const {
 //metodos para ejecutar la tabla rol
 router.get('/listarUsuRol', ListarUsuRolC)
 router.post('/crearRol', CrearRolC);
-router.put('/actualizarRol/:id', ActulizarRolC);
+router.put('/actualizarRol/:id', EditRolC);
+
+
+
 
 module.exports = router
+
+
