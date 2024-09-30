@@ -38,7 +38,7 @@ const CrearUsuario = async function (UsuarioData) {
         }
         const Password =  UsuarioData.identificacion
         if(!Password){
-            throw new Error
+            throw new Error('La identificación no puede estar vacía para crear una contraseña.');
         }
         const PasswordEncriptado = await bcrypt.hash(Password, 10);
         UsuarioData.contrasena = PasswordEncriptado;
@@ -75,12 +75,16 @@ const Login = async function (req, res) {
 
         const user = users[0];
         const isPasswordValid = await bcrypt.compare(contrasena, user.contrasena);
+        console.log("Contraseña válida:", isPasswordValid);
+        console.log("Contraseña :", contrasena);
+
         if (!isPasswordValid) {
             return res.status(401).json({ error: 'Contraseña incorrecta' });
         }
         const token = await CrearToken(user);
+        console.log("Token generado:", token);
         return res.status(200).json({ message: 'Inicio de sesión exitoso', token });
-
+        
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: 'Error al iniciar sesión' });
