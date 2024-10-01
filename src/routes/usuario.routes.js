@@ -6,36 +6,19 @@ const {
     CrearUserC, 
     ActualizarUserC, 
     ListarUsuariosC,
-     GetUserByEmailC,
-      BuscarUsuarioporid,
-      verificarTokenEnListaNegra
+     GetUserByEmailC, BuscarUsuarioporid,
+     LoginC, cerrarSesionC
 } = require('../controllers/usuario.controller')
-
-const {
-    //funciones del controller pare la tabla rol
-    EditRolC,
-    CrearRolC,
-    ListarUsuRolC
-} = require('../controllers/rol.controller')
-
-
-const verificarTokenEnListaNegra = require('../middleware/VerificarTokenEnListaNegra');
-// Ruta para cerrar sesión
-router.post('/logout', verificarTokenEnListaNegra, usuarioController.logout);.
+const validarTokenMiddleware = require('../middleware/VerificadorToken')
 
 
 //metodos para ejecutar la tabla usuarios
-router.get('/listarUsuarios', ListarUsuariosC);
+router.get('/listarUsuarios', validarTokenMiddleware, ListarUsuariosC);
 router.post('/crearUser', CrearUserC);
 router.put('/actualizarUsers/:id', ActualizarUserC);
+router.post('/login', LoginC)
+router.post('/cerrarSesion', cerrarSesionC);
 
-//metodos para ejecutar la tabla rol
-router.get('/listarUsuRol', ListarUsuRolC)
-router.post('/crearRol', CrearRolC);
-router.put('/actualizarRol/:id', EditRolC);
-
-
-router.get('/obtenerUsuarioPorEmail/:email', GetUserByEmailC);
 router.get('/buscarUser/:id',BuscarUsuarioporid);
 
 module.exports = router
