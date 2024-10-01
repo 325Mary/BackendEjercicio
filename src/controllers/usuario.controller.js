@@ -33,6 +33,15 @@ controller.CrearUserC = async function (req, res) {
     }
 }
 
+controller.LoginC = async function(req, res) {
+    try {
+        await LoginC(req, res);
+}catch(error) {
+    res.status(500).json({ error: error.message });
+}
+}
+
+
 controller.ActualizarUserC = async function (req, res) {
     try{
         const usuarioDatos = req.body;
@@ -69,9 +78,6 @@ module.exports = controller;
 controller.BuscarUsuarioporid= async function (req, res) {
     try{
         const idUsuario = req.params.id;
-
-       
-
 
         // Llamar al servicio para actualizar el usuario
         const user = await BuscarUsuarioporid(idUsuario)

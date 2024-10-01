@@ -1,5 +1,8 @@
 //manejamos las solicitudes
 const Usuario = require('../models/usuario.model');
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+require('dotenv').config();
 
 //exportamos las funciones
 
@@ -38,6 +41,43 @@ const CrearUsuario = async function (UsuarioData) {
     }
 }
 
+const CrearToken =  async function (user){
+    const {id, identificacion} = user;
+    const payload = {id, identificacion};
+    console.log(payload);
+    const secret = process.env.JWT_SECRET;
+    const options = {expiresIn: '30m'};
+    const token = jwt.sign(payload, secret, options);
+    return token
+}
+
+const Login = async function (req, res) {
+    try {
+        const { email, contrasena } = req.body;
+        if (!email || !contrasena) {
+            return res.status(400).json({ error: 'Credenciales necesarias' });
+        }
+        const [users] = await Usuario.findUserByEmail(email);
+        if (users.length === 0) {
+            return res.status(404).json({ error: 'Usuario no encontrado' });
+        }
+
+        const user = users[0];
+        const isPasswordValid = await bcrypt.compare(contrasena, user.contrasena);
+        if (!isPasswordValid) {
+            return res.status(401).json({ error: 'Contraseña incorrecta' });
+        }
+        const token = await CrearToken(user);
+        return res.status(200).json({ message: 'Inicio de sesión exitoso', token });
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'Error al iniciar sesión' });
+    }
+};
+
+
+
 const ActualizarUser = async function(idUsuario, NuevoUsuario){
     try{
          
@@ -53,6 +93,7 @@ const ActualizarUser = async function(idUsuario, NuevoUsuario){
         throw error;
     }
 }
+
 const getUserByEmail = async (email) => {
     try {
         
@@ -88,7 +129,8 @@ module.exports ={
     ActualizarUser,
     BuscarUsuarioporid ,
     ListarUsuarios,
-    getUserByEmail
+    getUserByEmail,
+    Login
 }
 
 /*

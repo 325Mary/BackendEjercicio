@@ -10,22 +10,11 @@ const {
      GetUserByEmailC, BuscarUsuarioporid
 } = require('../controllers/usuario.controller')
 
-const {
-    //funciones del controller pare la tabla rol
-    EditRolC,
-    CrearRolC,
-    ListarUsuRolC
-} = require('../controllers/rol.controller')
 
 //metodos para ejecutar la tabla usuarios
 router.get('/listarUsuarios', ListarUsuariosC);
 router.post('/crearUser', CrearUserC);
 router.put('/actualizarUsers/:id', ActualizarUserC);
-
-//metodos para ejecutar la tabla rol
-router.get('/listarUsuRol', ListarUsuRolC)
-router.post('/crearRol', CrearRolC);
-router.put('/actualizarRol/:id', EditRolC);
 
 
 router.get('/obtenerUsuarioPorEmail/:email', GetUserByEmailC);

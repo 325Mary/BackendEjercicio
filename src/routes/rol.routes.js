@@ -10,10 +10,12 @@ const {
     ListarUsuRolC
 } = require('../controllers/rol.controller')
 
+
 //metodos para ejecutar la tabla rol
 router.get('/listarUsuRol', ListarUsuRolC)
 router.post('/crearRol', CrearRolC);
 router.put('/actualizarRol/:id', EditRolC);
+
 
 
 router.get('/obtenerUsuarioPorEmail/:email', GetUserByEmailC);
