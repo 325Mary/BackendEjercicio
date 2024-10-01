@@ -2,7 +2,7 @@ const pool = require("../config/database");
 
 const Venta = {
   findAll: async () => {
-    return await pool.execute("SELECT * FROM Venta");
+    return await pool.execute("SELECT v.*, u.nombre FROM Venta v JOIN Usuario u ON v.id_usuario = u.id");
   },
 
   create: async ({ idUsuario, total }) => {
