@@ -49,6 +49,15 @@ const CrearUsuario = async function (UsuarioData) {
     }
 }
 
+const crearToken = async ( user ) => {
+    const { id, identificacion } = user;
+    const payload = { id, identificacion };
+    const secret = process.env.JWT_SECRET;
+    const options = { expiresIn: '30m' };
+    const token = jwt.sign(payload, secret, options);
+    return token;
+}
+
 const ActualizarUser = async function(idUsuario, NuevoUsuario){
     try{
          
