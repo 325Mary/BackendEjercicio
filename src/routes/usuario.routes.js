@@ -7,7 +7,8 @@ const {
     CrearUserC, 
     ActualizarUserC, 
     ListarUsuariosC,
-     GetUserByEmailC, BuscarUsuarioporid
+     GetUserByEmailC, BuscarUsuarioporid,
+    LoginC
 } = require('../controllers/usuario.controller')
 
 const {
@@ -21,6 +22,7 @@ const {
 router.get('/listarUsuarios', ListarUsuariosC);
 router.post('/crearUser', CrearUserC);
 router.put('/actualizarUsers/:id', ActualizarUserC);
+router.post('/Login', LoginC)
 
 //metodos para ejecutar la tabla rol
 router.get('/listarUsuRol', ListarUsuRolC)
