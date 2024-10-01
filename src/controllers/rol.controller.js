@@ -39,10 +39,10 @@ controller.ListarUsuRolC = async function (req, res) {
 
 controller.CrearRolC = async function (req, res) {
     try{
-        validarCamposRequeridos(['identificacion', 'rol', 'nombre','apellido' ]) (req, res, async()=>{
+        validarCamposRequeridos(['rol' ]) (req, res, async()=>{
             
             const rolData = req.body;
-            if(!rolData.identificacion || !rolData.rol || !rolData.nombre || !rolData.apellido){
+            if( !rolData.rol ){
                 return res.status(400).json({ error: 'Todos los campos son requeridos' });
             } 
 

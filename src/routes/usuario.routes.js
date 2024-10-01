@@ -7,17 +7,19 @@ const {
     CrearUserC, 
     ActualizarUserC, 
     ListarUsuariosC,
-     GetUserByEmailC, BuscarUsuarioporid
+     GetUserByEmailC, BuscarUsuarioporid,
+     LoginC, cerrarSesionC
 } = require('../controllers/usuario.controller')
+const validarTokenMiddleware = require('../middleware/VerificadorToken')
 
 
 //metodos para ejecutar la tabla usuarios
-router.get('/listarUsuarios', ListarUsuariosC);
-router.post('/crearUser', CrearUserC);
+router.get('/listarUsuarios', validarTokenMiddleware, ListarUsuariosC);
+router.post('/crearUser', CrearUserC);-
 router.put('/actualizarUsers/:id', ActualizarUserC);
+router.post('/login', LoginC)
+router.post('/cerrarSesion', cerrarSesionC);
 
-
-router.get('/obtenerUsuarioPorEmail/:email', GetUserByEmailC);
 router.get('/buscarUser/:id',BuscarUsuarioporid);
 
 module.exports = router

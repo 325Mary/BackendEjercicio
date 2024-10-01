@@ -3,6 +3,8 @@ const Usuario = require('../models/usuario.model');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 require('dotenv').config();
+const {listaNegraService} = require('./ListaNegraService')
+
 
 //exportamos las funciones
 
@@ -20,7 +22,7 @@ const ObtenerUsuarioPorId = async function (idUsuario) {
 }
 
 // funcion para listar usuarios de la Bd
-const ListarUsuarios = async function (UsuarioData){
+const ListarUsuarios = async function (){
     try {
         const usuarios = await Usuario.findAll({});
         return usuarios;
@@ -29,17 +31,26 @@ const ListarUsuarios = async function (UsuarioData){
     }
 }
 const CrearUsuario = async function (UsuarioData) {
-    if (!UsuarioData.identificacion || !UsuarioData.nombre || !UsuarioData.apellido || !UsuarioData.email || !UsuarioData.contrasena || !UsuarioData.direccion || !UsuarioData.fecha_nacimiento) {
-        throw new Error('Todos los campos son requeridos');
-    }
+    
 
     try {
+        if (!UsuarioData) {
+            throw new Error('Todos los campos son requeridos');
+        }
+        const Password =  UsuarioData.identificacion
+        if(!Password){
+            throw new Error
+        }
+        const PasswordEncriptado = await bcrypt.hash(Password, 10);
+        UsuarioData.contrasena = PasswordEncriptado;
+
         const usuarioCreado = await Usuario.create(UsuarioData);
         return usuarioCreado;
     } catch (error) {
         throw error;
     }
 }
+
 
 const CrearToken =  async function (user){
     const {id, identificacion} = user;
@@ -50,6 +61,7 @@ const CrearToken =  async function (user){
     const token = jwt.sign(payload, secret, options);
     return token
 }
+
 
 const Login = async function (req, res) {
     try {
@@ -76,61 +88,60 @@ const Login = async function (req, res) {
     }
 };
 
-
-
 const ActualizarUser = async function(idUsuario, NuevoUsuario){
     try{
          
         const usuarioActualizado = await Usuario.editUsuario(idUsuario, NuevoUsuario);
-
         if (!usuarioActualizado) {
             throw new Error('No se pudo actualizar el usuario, o el usuario no existe.');
         }
-        
         return usuarioActualizado;
-        
-    }catch(error){
+    } catch (error) {
         throw error;
     }
 }
 
 const getUserByEmail = async (email) => {
     try {
-        
         const [rows] = await Usuario.findUserByEmail(email);
         if (rows.length === 0) {
             throw new Error('Usuario no encontrado');
         }
-        return rows[0]; 
+        return rows[0];
     } catch (error) {
-        throw error; 
-    } 
-}
-
-const BuscarUsuarioporid = async function(idUsuario){
-    try{
-         
-        const buscandousuario = await Usuario.findOneUsuario(idUsuario);
-
-        if (!buscandousuario) {
-            throw new Error('No se pudo actualizar el usuario, o el usuario no existe.');
-        }
-
-        return buscandousuario;
-        
-    }catch(error){
         throw error;
     }
 }
+
+const BuscarUsuarioporid = async function (idUsuario) {
+    try {
+        const buscandousuario = await Usuario.findOneUsuario(idUsuario);
+        if (!buscandousuario) {
+            throw new Error('No se pudo actualizar el usuario, o el usuario no existe.');
+        }
+        return buscandousuario;
+    } catch (error) {
+        throw error;
+    }
+}
+const cerrarSesion = async (token) => {
+    try {
+      await listaNegraService.agregarToken(token);
+      return { message: 'Sesión cerrada exitosamente' };
+    } catch (error) {
+      throw error;
+    }
+  };
 
 
 module.exports ={
     CrearUsuario,
     ActualizarUser,
-    BuscarUsuarioporid ,
+    BuscarUsuarioporid,
     ListarUsuarios,
     getUserByEmail,
-    Login
+    Login,
+    cerrarSesion
 }
 
 /*
