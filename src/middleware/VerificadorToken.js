@@ -26,6 +26,7 @@ const validarTokenMiddleware = async (req, res, next) => {
       }
       
         req.user = decoded;
+        req.id = decoded.id
             
         next();
     });

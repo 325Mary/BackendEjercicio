@@ -57,7 +57,7 @@ const CrearToken =  async function (user){
     const payload = {id, identificacion};
     console.log(payload);
     const secret = process.env.JWT_SECRET;
-    const options = {expiresIn: '30m'};
+    const options = {expiresIn: '3m'};
     const token = jwt.sign(payload, secret, options);
     return token
 }
@@ -80,8 +80,11 @@ const Login = async function (req, res) {
             return res.status(401).json({ error: 'Contraseña incorrecta' });
         }
         const token = await CrearToken(user);
-        return res.status(200).json({ message: 'Inicio de sesión exitoso', token });
-
+        return res.status(200).json({ 
+            message: 'Inicio de sesión exitoso', 
+            token,
+            user: { id: user.id, identificacion: user.identificacion } 
+        });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: 'Error al iniciar sesión' });
