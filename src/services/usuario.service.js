@@ -134,12 +134,12 @@ const BuscarUsuarioporid = async function(idUsuario){
 }
 const cerrarSesion = async (token) => {
     try {
-      await listaNegraService.agregarToken(token);
-      return { message: 'Sesión cerrada exitosamente' };
+        await listaNegraService.agregarToken(token);
+        return { message: 'Sesión cerrada exitosamente' };
     } catch (error) {
-      throw error;
+        throw error;
     }
-  };
+    };
 
 
 module.exports ={
