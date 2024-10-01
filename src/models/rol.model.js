@@ -7,13 +7,13 @@ const Rol = {
   },
 
   create: async function(rolData) {
-    if (!rolData.identificacion || !rolData.rol || !rolData.nombre || !rolData.apellido) {
+    if ( !rolData.rol ) {
       throw new Error('Todos los campos son requeridos');
     }
 
-    const rol = `INSERT INTO Rol (identificacion, rol, nombre, apellido)
-      VALUES (?, ?, ?, ?)`;
-    return pool.execute(rol, [rolData.identificacion, rolData.rol, rolData.nombre, rolData.apellido]);
+    const rol = `INSERT INTO Rol ( rol)
+      VALUES (?)`;
+    return pool.execute(rol, [rolData.rol]);
   },
 
   findByPk: async function(idRol) {

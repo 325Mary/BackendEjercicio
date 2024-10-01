@@ -16,7 +16,6 @@ router.post('/crearRol', CrearRolC);
 router.put('/actualizarRol/:id', EditRolC);
 
 
-router.get('/obtenerUsuarioPorEmail/:email', GetUserByEmailC);
 
 module.exports = router
 

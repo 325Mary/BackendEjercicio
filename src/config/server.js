@@ -5,6 +5,7 @@ const express = require('express');
 const morgan = require('morgan')
 const cors = require('cors');
 const usuarioRoutes = require('../routes/usuario.routes')
+const RolRoutes = require('../routes/rol.routes')
 
 
 // crear nuestra aplicacion express
@@ -24,6 +25,7 @@ Backend.use(morgan('dev'));
 Backend.use(express.urlencoded({ extended: true }));
 
 Backend.use(usuarioRoutes);
+Backend.use(RolRoutes)
 
 Backend.set('port', process.env.PORT || port );
 module.exports = Backend
