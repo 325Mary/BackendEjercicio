@@ -2,6 +2,8 @@
 const Usuario = require('../models/usuario.model');
 const bcrypt  = require("bcrypt")
 const jwt = require("jsonwebtoken")
+const BlacklistToken  = require('../models/blacklistToken.model');
+
 
 //exportamos las funciones
 
@@ -91,15 +93,66 @@ const BuscarUsuarioporid = async function(idUsuario){
         throw error;
     }
 }
+const CrearToken = async function (user) {
+    const {id,identificacion} = user;
+    const payload = {id,identificacion};
+    console.log(payload);
+    const secret = process.env.JWT_SECRET;
+    const options = {expiresIn:'30m'};
+    const token = jwt.sign(payload,secret,options);
+    return token
+}
+const login =async function (req,res) {
+    try{
+        const {email,contrasena} =req.body;
+        if(!email || !contrasena){
+            return res.status(400).json({error:'credenciales necesarias'})
+        }
+        const [users] =await Usuario.findUserByEmail(email);
+        if (users.length ===0){
+            return res.status(404).json({error:'ususario no encontrado'});
+        }
+        const user =users =[o];
+        const isPasswordValid = await bcrypt.compare(contrasena,user.contrasena);
+        if(!isPasswordValid){
+            return res.status(401).json({error:'contraseña incorrecta' });
+        }
+        const token =await CrearToken(user);
+        return res.status(200).json({massage:'inicio de sesión exitoso',token})
+    }
+    catch (error){
+        console.error(error);
+        return res.status(500).json({error:'Error al iniciar sesión'});
+    }
+    
+}
 
+// Función para invalidar el token (agregar a la lista negra)
+const cerrarSesion = async (token) => {
+    try {
+      // Verifica que el token sea válido y decodifica su contenido
+      const decoded = jwt.verify(token, SECRET);
+  
+      // Guarda el token en la lista negra
+      await BlacklistToken.create({ token });
+  
+      return { message: 'Sesión cerrada exitosamente' };
+    } catch (error) {
+      throw new Error('Token inválido');
+    }
+}
 
 module.exports ={
     CrearUsuario,
     ActualizarUser,
     BuscarUsuarioporid ,
     ListarUsuarios,
-    getUserByEmail
+    getUserByEmail,
+    cerrarSesion
 }
+
+
+
 
 /*
 define un servicio para crear usuarios en una aplicación Node.js. La función CrearUsuario valida los datos del usuario, 

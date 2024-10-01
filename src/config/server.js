@@ -5,9 +5,10 @@ const express = require('express');
 const morgan = require('morgan')
 const usuarioRoutes = require('../routes/usuario.routes')
 
+
 // crear nuestra aplicacion express
 const Backend = express();
-const port = 3002;
+const port = 3006;
 Backend.use(express.json());
 Backend.use(morgan('dev'));
 

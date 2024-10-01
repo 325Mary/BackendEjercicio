@@ -1,13 +1,14 @@
 //define una ruta para la creación de usuarios en una aplicación Node.js utilizando el framework Express.
 const express = require('express');
 const router = express.Router();
-
 const {
     //funciones del controller para la tabla usuarios
     CrearUserC, 
     ActualizarUserC, 
     ListarUsuariosC,
-     GetUserByEmailC, BuscarUsuarioporid
+     GetUserByEmailC,
+      BuscarUsuarioporid,
+      verificarTokenEnListaNegra
 } = require('../controllers/usuario.controller')
 
 const {
@@ -16,6 +17,12 @@ const {
     CrearRolC,
     ListarUsuRolC
 } = require('../controllers/rol.controller')
+
+
+const verificarTokenEnListaNegra = require('../middleware/VerificarTokenEnListaNegra');
+// Ruta para cerrar sesión
+router.post('/logout', verificarTokenEnListaNegra, usuarioController.logout);.
+
 
 //metodos para ejecutar la tabla usuarios
 router.get('/listarUsuarios', ListarUsuariosC);
