@@ -91,42 +91,35 @@ const ActualizarUser = async function(idUsuario, NuevoUsuario){
     try{
          
         const usuarioActualizado = await Usuario.editUsuario(idUsuario, NuevoUsuario);
-
         if (!usuarioActualizado) {
             throw new Error('No se pudo actualizar el usuario, o el usuario no existe.');
         }
-        
         return usuarioActualizado;
-        
-    }catch(error){
+    } catch (error) {
         throw error;
     }
 }
+
 const getUserByEmail = async (email) => {
     try {
-        
         const [rows] = await Usuario.findUserByEmail(email);
         if (rows.length === 0) {
             throw new Error('Usuario no encontrado');
         }
-        return rows[0]; 
+        return rows[0];
     } catch (error) {
-        throw error; 
-    } 
+        throw error;
+    }
 }
 
-const BuscarUsuarioporid = async function(idUsuario){
-    try{
-         
+const BuscarUsuarioporid = async function (idUsuario) {
+    try {
         const buscandousuario = await Usuario.findOneUsuario(idUsuario);
-
         if (!buscandousuario) {
             throw new Error('No se pudo actualizar el usuario, o el usuario no existe.');
         }
-
         return buscandousuario;
-        
-    }catch(error){
+    } catch (error) {
         throw error;
     }
 }
@@ -143,7 +136,7 @@ const cerrarSesion = async (token) => {
 module.exports ={
     CrearUsuario,
     ActualizarUser,
-    BuscarUsuarioporid ,
+    BuscarUsuarioporid,
     ListarUsuarios,
     getUserByEmail,
     Login,
