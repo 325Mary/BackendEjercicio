@@ -15,7 +15,7 @@ const validarTokenMiddleware = require('../middleware/VerificadorToken')
 
 //metodos para ejecutar la tabla usuarios
 router.get('/listarUsuarios', validarTokenMiddleware, ListarUsuariosC);
-router.post('/crearUser', CrearUserC);
+router.post('/crearUser', CrearUserC);-
 router.put('/actualizarUsers/:id', ActualizarUserC);
 router.post('/login', LoginC)
 router.post('/cerrarSesion', cerrarSesionC);
