@@ -2,12 +2,6 @@ const Venta = require("../models/venta.model");
 
 const VentaService = {
   crearVenta: async (ventaData) => {
-    const { idUsuario, total } = ventaData;
-
-    if (!idUsuario || !total) {
-      throw new Error("Todos los campos son requeridos");
-    }
-
     try {
       const result = await Venta.create(ventaData);
       return result;
@@ -28,9 +22,6 @@ const VentaService = {
   obtenerVentaPorId: async (idVenta) => {
     try {
       const venta = await Venta.findById(idVenta);
-      if (!venta) {
-        throw new Error(`La venta con id = ${idVenta}, no existe!`);
-      }
       return venta;
     } catch (error) {
       throw new Error("Error al obtener la venta: ", error.message);

@@ -22,9 +22,9 @@ controller.ObtenerVentasC = async (req, res) => {
 }
 
 controller.ObtenerVentaPorIdC = async (req, res) => {
-  const id = req.params.id;
+  const {idVenta}  = req.params;
   try {
-    const venta = await obtenerVentaPorId(id);
+    const venta = await obtenerVentaPorId(idVenta);
     res.status(200).json(venta);
   } catch (error) {
     res.status(500).json({error: error.message});
@@ -42,9 +42,9 @@ controller.ActualizarVentaC = async (req, res) => {
 }
 
 controller.EliminarVentaC = async (req, res) => {
-  const id = req.params.id;
+  const {idVenta} = req.params;
   try {
-    const result = await eliminarVenta(id);
+    const result = await eliminarVenta(idVenta);
     res.status(200).json({ message: 'Venta eliminada exitosamente', result })
   } catch (error) {
     res.status(500).json({ error: error.message });

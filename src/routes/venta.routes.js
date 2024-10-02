@@ -1,15 +1,24 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
-const { CrearVentaC, ObtenerVentasC, ObtenerVentaPorIdC, ActualizarVentaC, EliminarVentaC } = require("../controllers/venta.controller");
-const {validarCrearVenta,
-    validarActualizarVenta,
-    validarEliminarVenta} = require('../middleware/venta.validaciones')
+const {
+  CrearVentaC,
+  ObtenerVentasC,
+  ObtenerVentaPorIdC,
+  ActualizarVentaC,
+  EliminarVentaC,
+} = require("../controllers/venta.controller");
+const {
+  validarObtenerVentaPorId,
+  validarCrearVenta,
+  validarActualizarVenta,
+  validarEliminarVenta,
+} = require("../middleware/venta.validations");
 
-router.get('/obtenerVentas', ObtenerVentasC);
-router.get('/obtenerVentas/:id', ObtenerVentaPorIdC);
-router.post('/crearVenta', CrearVentaC);
-router.put('/actualizarVenta', ActualizarVentaC);
-router.delete('/eliminarVenta/:id', EliminarVentaC);
+router.get("/obtenerVentas", ObtenerVentasC);
+router.get("/obtenerVentas/:idVenta", validarObtenerVentaPorId, ObtenerVentaPorIdC);
+router.post("/crearVenta", validarCrearVenta, CrearVentaC);
+router.put("/actualizarVenta", validarActualizarVenta, ActualizarVentaC);
+router.delete("/eliminarVenta/:idVenta", validarEliminarVenta, EliminarVentaC);
 
 module.exports = router;
