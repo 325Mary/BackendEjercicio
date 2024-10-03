@@ -7,8 +7,8 @@ const {
     CrearUserC, 
     ActualizarUserC, 
     ListarUsuariosC,
-     GetUserByEmailC, BuscarUsuarioporid,
-     LoginC, cerrarSesionC
+    GetUserByEmailC, BuscarUsuarioporid,
+    LoginC, cerrarSesionC
 } = require('../controllers/usuario.controller')
 const validarTokenMiddleware = require('../middleware/VerificadorToken')
 

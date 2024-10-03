@@ -90,7 +90,7 @@ const Login = async function (req, res) {
 
 const ActualizarUser = async function(idUsuario, NuevoUsuario){
     try{
-         
+        
         const usuarioActualizado = await Usuario.editUsuario(idUsuario, NuevoUsuario);
         if (!usuarioActualizado) {
             throw new Error('No se pudo actualizar el usuario, o el usuario no existe.');
@@ -99,6 +99,7 @@ const ActualizarUser = async function(idUsuario, NuevoUsuario){
     } catch (error) {
         throw error;
     }
+
 }
 
 const getUserByEmail = async (email) => {
@@ -126,12 +127,12 @@ const BuscarUsuarioporid = async function (idUsuario) {
 }
 const cerrarSesion = async (token) => {
     try {
-      await listaNegraService.agregarToken(token);
-      return { message: 'Sesión cerrada exitosamente' };
+        await listaNegraService.agregarToken(token);
+        return { message: 'Sesión cerrada exitosamente' };
     } catch (error) {
-      throw error;
+        throw error;
     }
-  };
+    };
 
 
 module.exports ={

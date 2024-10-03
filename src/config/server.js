@@ -6,10 +6,11 @@ const morgan = require('morgan')
 const cors = require('cors');
 const usuarioRoutes = require('../routes/usuario.routes')
 const RolRoutes = require('../routes/rol.routes')
+const productoRoutes = require('../routes/producto.routes')
 
 // crear nuestra aplicacion express
 const Backend = express();
-const port = 3002;
+const port = 3006;
 
 Backend.use(cors({
     origin: 'http://localhost:4200', // Asegúrate de que esta URL coincida con la del frontend de Angular
@@ -24,7 +25,8 @@ Backend.use(morgan('dev'));
 Backend.use(express.urlencoded({ extended: true }));
 
 Backend.use(usuarioRoutes);
-Backend.use(RolRoutes)
+Backend.use(RolRoutes);
+Backend.use(productoRoutes);
 
 Backend.set('port', process.env.PORT || port );
 module.exports = Backend
