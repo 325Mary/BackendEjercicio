@@ -4,8 +4,6 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 require('dotenv').config();
 const {listaNegraService} = require('./ListaNegraService')
-
-
 //exportamos las funciones
 
 //funcion para filtrar usuario por su id 
@@ -133,6 +131,7 @@ const cerrarSesion = async (token) => {
     }
   };
 
+  
 
 module.exports ={
     CrearUsuario,

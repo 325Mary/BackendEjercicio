@@ -5,7 +5,7 @@ const mysql = require('mysql2');
 const Usuario = {
     //funcion para mostrar todo de la tabla usuarios, funciona asincronica nos retorna una consulta
     findAll: async function () {
-        return await pool.execute('SELECT Usuario.*,Usuario.nombre,Rol.rol');
+        return await pool.execute('SELECT Usuario.*,Usuario.nombre,Rol.rolFROM usuarioINNER JOIN Rol ON usuario.idRol = Rol.idRol;');
     },
     create: async function (UsuarioData) {
         if (!UsuarioData.identificacion || !UsuarioData.nombre || !UsuarioData.apellido || !UsuarioData.email || !UsuarioData.contrasena || !UsuarioData.direccion || !UsuarioData.fecha_nacimiento) {
@@ -14,11 +14,13 @@ const Usuario = {
 
         const user = `INSERT INTO Usuario (identificacion, nombre, apellido, email, contrasena, direccion, fecha_nacimiento, idRol )
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
-        return pool.execute(user, [UsuarioData.identificacion, UsuarioData.nombre, UsuarioData.apellido, UsuarioData.email, UsuarioData.contrasena, UsuarioData.direccion, UsuarioData.fecha_nacimiento. UsuarioData.idRol]);
+
+        return pool.execute(user, [UsuarioData.identificacion, UsuarioData.nombre, UsuarioData.apellido, UsuarioData.email, UsuarioData.contrasena, UsuarioData.direccion, UsuarioData.fecha_nacimiento, UsuarioData.idRol]);
     },
     findOneUsuario: async function (id) {//devuelve un usuario específico por su ID.
         return await pool.execute('SELECT * FROM Usuario where idUsuario = ?', [id]);
 
+        
     },
     findUserByEmail: async (email) => {
         return pool.execute('SELECT * FROM Usuario where email = ?', [email])
