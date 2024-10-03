@@ -5,7 +5,7 @@ const mysql = require('mysql2');
 const Usuario = {
     //funcion para mostrar todo de la tabla usuarios, funciona asincronica nos retorna una consulta
     findAll: async function () {
-        return await pool.execute('SELECT * FROM Usuario');
+        return await pool.execute('SELECT Usuario.*,  Rol.rol FROM Usuario INNER JOIN Rol ON Usuario.idRol = Rol.idRol');
     },
     create: async function (UsuarioData) {
         if (!UsuarioData.identificacion || !UsuarioData.nombre || !UsuarioData.apellido || !UsuarioData.email || !UsuarioData.contrasena || !UsuarioData.direccion || !UsuarioData.fecha_nacimiento) {
