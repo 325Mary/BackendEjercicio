@@ -12,8 +12,22 @@ const crearTienda = async (data) => {
     } catch (error) {
         throw new Error('No se pudo crear la tienda: ' + error.message);
     }
+
 };
+const ActualizarTienda = async function(idTienda, nuevaTienda){
+    try{
+         
+        const TiendaActualizado = await Tienda.editTienda(idTienda, nuevaTienda);
+        if (!TiendaActualizado) {
+            throw new Error('No se pudo actualizar la tienda, o la tienda no existe.');
+        }
+        return TiendaActualizado;
+    } catch (error) {
+        throw error;
+    }
+}
 
 module.exports = {
-    crearTienda
+    crearTienda,
+    ActualizarTienda
 };

@@ -1,6 +1,5 @@
-const {crearTienda,} = require('../services/tienda.service');
+const {crearTienda, ActualizarTienda} = require('../services/tienda.service');
 
-const { ActualizarTienda} = require('../services/tienda.service');
 const controller = {};
 
 controller.crearTiendaC = async (req, res) => {
@@ -27,4 +26,18 @@ controller.crearTiendaC = async (req, res) => {
 };
 
 
+controller.ActualizarTiendaC = async function (req, res) {
+    try{
+        const tiendaData = req.body;
+        const idTienda = req.params.id;
+
+        // Llamar al servicio para actualizar el usuario
+        const tienda = await ActualizarTienda(idTienda, tiendaData)
+
+        // Enviar la respuesta
+        return res.status(201).json(tienda);
+    }catch(error){
+        res.status(500).json({error: error.message})
+    }
+}
 module.exports = controller;

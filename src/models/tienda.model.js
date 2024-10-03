@@ -10,6 +10,20 @@ const Tienda = {
 
         ]);
     },
+    editTienda: async function (idTienda, NuevaTienda) {//actualiza un usuario existente en la base de datos
+        try {
+            const [result] = await pool.execute(
+                `UPDATE tienda SET nombre = ?, direccion = ?, telefono = ?, email = ?, fecha_registro = ?, identificacion = ? WHERE id = ?`,
+                [NuevaTienda.nombre, NuevaTienda.direccion, NuevaTienda.telefono, NuevaTienda.email, NuevaTienda.fecha_registro, NuevaTienda.identificacion, idTienda]
+            );
+            if (result.affectedRows === 0) {
+                throw new Error('No se encontró la tienda');
+            }
+            return { mensaje: 'la tienda se actualizó correctamente' };
+        } catch (error) {
+            throw error;
+        }
+    },
     findAll: (callback) => {
         const query = 'SELECT * FROM tienda';
         pool.query(query, callback);
@@ -27,25 +41,6 @@ const Tienda = {
         pool.query(query, [id], callback);
     }
 };
-/*
-controller.ActualizarTiendaC = async function (req, res) {
-    try{
-        const { id,nombre, direccion, telefono,email,fecha_registro} = req.body;
 
-        const tiendaId = req.params.id;
-        // Llamar al servicio para actualizar el usuario
-        const tienda = await Tienda.finpoolyId(tiendaId);
-        //si no se encuantra la tienda
-        if (!tienda) {
-            return res.status(404).json({ error: 'Tienda no encontrada' });
-        }
-
-        const tiendaActualizada = await tienda.save();
-        // Enviar la respuesta
-        return res.status(201).json(tiendaActualizada);
-    }catch(error){
-        res.status(500).json({error:error.message })
-    }
-}*/
 
 module.exports = Tienda;
