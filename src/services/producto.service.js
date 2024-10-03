@@ -42,6 +42,8 @@ const productoService = {
 
     ActualizarProducto: async function (id, ProductoData) {
 
+        const{Nombre, Descripcion, Precio, Stock, Idtienda} = ProductoData;
+
         if (!Nombre || !Descripcion|| !Precio || !Stock || !Idtienda) {
             throw new Error('Todos los campos son requeridos para la actualización.');
         }
