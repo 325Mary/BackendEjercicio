@@ -10,7 +10,7 @@ const productoRoutes = require('../routes/producto.routes')
 
 // crear nuestra aplicacion express
 const Backend = express();
-const port = 3006;
+const port = 3002;
 
 Backend.use(cors({
     origin: 'http://localhost:4200', // Asegúrate de que esta URL coincida con la del frontend de Angular
