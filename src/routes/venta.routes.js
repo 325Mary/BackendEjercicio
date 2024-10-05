@@ -18,7 +18,7 @@ const {
 router.get("/obtenerVentas", ObtenerVentasC);
 router.get("/obtenerVentas/:idVenta", validarObtenerVentaPorId, ObtenerVentaPorIdC);
 router.post("/crearVenta", validarCrearVenta, CrearVentaC);
-router.put("/actualizarVenta", validarActualizarVenta, ActualizarVentaC);
+router.put("/actualizarVenta/:idVenta", validarActualizarVenta, ActualizarVentaC);
 router.delete("/eliminarVenta/:idVenta", validarEliminarVenta, EliminarVentaC);
 
 module.exports = router;

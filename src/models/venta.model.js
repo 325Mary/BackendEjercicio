@@ -5,10 +5,10 @@ const Venta = {
     return await pool.execute("SELECT v.*, u.nombre FROM Venta v JOIN Usuario u ON v.id_usuario = u.id");
   },
 
-  create: async ({ idUsuario, total }) => {
+  create: async ({ idUsuario, fechaVenta, total }) => {
     return await pool.execute(
-      "INSERT INTO Venta (id_usuario, fecha_venta, total) VALUES (?, NOW(), ?)",
-      [idUsuario, total]
+      "INSERT INTO Venta (id_usuario, fecha_venta, total) VALUES (?, ?, ?)",
+      [idUsuario, fechaVenta, total]
     );
   },
 
@@ -18,7 +18,7 @@ const Venta = {
     ]);
   },
 
-  update: async ({idVenta, idUsuario, fechaVenta, total }) => {
+  update: async (idVenta, {idUsuario, fechaVenta, total }) => {
     return await pool.execute(
       "UPDATE Venta SET id_usuario = ?, fecha_venta = ?, total = ? WHERE id_venta = ?",
       [idUsuario, fechaVenta, total, idVenta]

@@ -28,15 +28,15 @@ const VentaService = {
     }
   },
 
-  actualizarVenta: async (ventaData) => {
-    const {idVenta, idUsuario, fechaVenta, total } = ventaData;
+  actualizarVenta: async (idVenta, ventaData) => {
+    const {idUsuario, fechaVenta, total } = ventaData;
 
-    if (!idVenta || !idUsuario || !fechaVenta || !total) {
+    if (!idUsuario || !fechaVenta || !fechaVenta || !total) {
       throw new Error("Todos los campos son requeridos");
     }
 
     try {
-      const result = await Venta.update(ventaData);
+      const result = await Venta.update(idVenta, ventaData);
       if (result.affectedRows === 0) {
         throw new Error(`No se encontró una venta con el id = ${idVenta}`);
       }

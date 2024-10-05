@@ -32,9 +32,10 @@ controller.ObtenerVentaPorIdC = async (req, res) => {
 }
 
 controller.ActualizarVentaC = async (req, res) => {
+  const { idVenta } = req.params;
   const ventaData = req.body;
   try {
-    const result = await actualizarVenta(ventaData);
+    const result = await actualizarVenta(idVenta, ventaData);
     res.status(200).json({ message: "Venta actualizada exitosamente", result });
   } catch (error) {
     res.status(500).json({error: error.message});
