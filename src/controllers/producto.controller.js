@@ -46,7 +46,7 @@ controller.ActualizarProductoC = async function (req, res) {
     const ProductoData = req.body;
 
     try {
-        const result = await producto.ActualizarProducto(id, ProductoData);
+        await producto.ActualizarProducto(id, ProductoData)
         res.status(200).json(result);
     } catch (error) {
         res.status(500).json({ error: error.message });
