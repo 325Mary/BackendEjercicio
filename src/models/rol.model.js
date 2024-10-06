@@ -7,11 +7,11 @@ const Rol = {
   },
 
   create: async function(rolData) {
-    if (!rolData.rol ) {
+    if ( !rolData.rol ) {
       throw new Error('Todos los campos son requeridos');
     }
 
-    const rol = `INSERT INTO Rol (rol)
+    const rol = `INSERT INTO Rol ( rol)
       VALUES (?)`;
     return pool.execute(rol, [rolData.rol]);
   },

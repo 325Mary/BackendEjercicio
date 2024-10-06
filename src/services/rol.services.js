@@ -2,7 +2,7 @@ const RolUsuario = require('../models/rol.model');
 
 
 const CrearRol = async function(rolData) {
-    if ( !rolData.rol){
+    if ( !rolData.rol ){
         throw new Error('Todos los campos son requeridos');
     }
     try{

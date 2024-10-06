@@ -17,7 +17,6 @@ router.put('/actualizarRol/:id', EditRolC);
 
 
 
-
 module.exports = router
 
 
