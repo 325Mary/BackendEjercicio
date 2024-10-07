@@ -12,7 +12,7 @@ const VentaService = {
 
   obtenerVentas: async () => {
     try {
-      const ventas = await Venta.findAll();
+      const [ventas] = await Venta.findAll();
       return ventas;
     } catch (error) {
       throw error("Error al obtener las ventas: ", error.message);
@@ -21,8 +21,8 @@ const VentaService = {
 
   obtenerVentaPorId: async (idVenta) => {
     try {
-      const venta = await Venta.findById(idVenta);
-      return venta;
+      const [venta] = await Venta.findById(idVenta);
+      return venta[0];
     } catch (error) {
       throw new Error("Error al obtener la venta: ", error.message);
     }
