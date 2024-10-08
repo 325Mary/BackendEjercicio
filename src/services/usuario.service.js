@@ -143,7 +143,9 @@ module.exports ={
     ListarUsuarios,
     getUserByEmail,
     Login,
-    cerrarSesion
+    cerrarSesion,
+ ObtenerUsuarioPorId 
+
 }
 
 

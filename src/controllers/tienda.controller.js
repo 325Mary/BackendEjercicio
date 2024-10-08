@@ -23,8 +23,19 @@ controller.crearTiendaC = async (req, res) => {
             error: error.message
         });
     }
+}
+// Leer tienda por ID
+controller.getTienda = async (req, res) => {
+    try {
+        const tienda = await tiendaService.getTiendaById(req.params.id);
+        if (!tienda) {
+            return res.status(404).json({ message: "Tienda no encontrada" });
+        }
+        res.json(tienda);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 };
-
 
 controller.ActualizarTiendaC = async function (req, res) {
     try{
@@ -40,4 +51,16 @@ controller.ActualizarTiendaC = async function (req, res) {
         res.status(500).json({error: error.message})
     }
 }
+// Eliminar tienda por ID
+controller.deleteTienda = async (req, res) => {
+    try {
+        const result = await tiendaService.deleteTienda(req.params.id);
+        if (result.message === "Tienda no encontrada") {
+            return res.status(404).json({ message: result.message });
+        }
+        res.json({ message: result.message });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
 module.exports = controller;

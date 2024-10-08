@@ -36,10 +36,19 @@ const Tienda = {
         const query = 'UPDATE tienda SET ? WHERE id = ?';
         pool.query(query, [data, id], callback);
     },
-    delete: (id, callback) => {
-        const query = 'DELETE FROM tienda WHERE id = ?';
-        pool.query(query, [id], callback);
+
+    DeleteTienda: async function (idTienda) {
+        try {
+            const [result] = await pool.execute('DELETE FROM Tienda WHERE idTienda = ?', [idTienda])
+            if (result.affectedRows === 0) {
+                throw new console.error('la tienda no existe')
+            }
+            return { message: 'la tienda eliminada existosamente' }
+        } catch (error) {
+            throw error
+        }
     }
+
 };
 
 

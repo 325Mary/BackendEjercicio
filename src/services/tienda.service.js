@@ -1,5 +1,4 @@
 const Tienda = require('../models/tienda.model');
-
 const crearTienda = async (data) => {
     try {
         if(!data){
@@ -12,7 +11,20 @@ const crearTienda = async (data) => {
     } catch (error) {
         throw new Error('No se pudo crear la tienda: ' + error.message);
     }
+    
 
+}
+// Obtener tienda por ID
+const getTiendaById = async (id) => {
+    try {
+        const tienda = await Tienda.findById(id);
+        if (!tienda) {
+            return { message: "Tienda no encontrada" };
+        }
+        return tienda;
+    } catch (error) {
+        throw new Error(`Error al obtener la tienda: ${error.message}`);
+    }
 };
 const ActualizarTienda = async function(idTienda, nuevaTienda){
     try{
@@ -26,8 +38,25 @@ const ActualizarTienda = async function(idTienda, nuevaTienda){
         throw error;
     }
 }
+// Eliminar tienda por ID
+const deleteTienda = async (id) => {
+    try {
+        const tiendaeliminada = await Tienda.findByIdAndDelete(id);
+        if (!tiendaeliminada) {
+            return { message: "Tienda no encontrada" };
+        }
+        return { message: "Tienda eliminada correctamente" };
+    } catch (error) {
+        throw new Error(`Error al eliminar la tienda: ${error.message}`);
+    }
+};
+
 
 module.exports = {
     crearTienda,
-    ActualizarTienda
+    getTiendaById,
+    ActualizarTienda,
+    deleteTienda 
+
+
 };
