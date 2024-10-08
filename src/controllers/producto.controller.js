@@ -9,7 +9,6 @@ controller.crearProductoC = async function (req, res) {
         const productoCreado = await producto.crearProducto(ProductoData);
         res.status(201).json( productoCreado );
 
-
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -42,7 +41,7 @@ controller.ListarProductosIdC = async function (req, res) {
 }
 
 controller.ActualizarProductoC = async function (req, res) {
-    const id = req.params.id;
+    const  id  = req.params.id;
     const ProductoData = req.body;
 
     try {

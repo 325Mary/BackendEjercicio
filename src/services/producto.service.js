@@ -5,9 +5,9 @@ const productoService = {
 
     crearProducto: async function (ProductoData) {
 
-        const{Nombre, Descripcion, Precio, Stock, Idtienda} = ProductoData;
+        const{Nombre, Descripcion, Precio, Stock, IdTienda} = ProductoData;
         
-        if(!Nombre || !Descripcion || !Precio || !Stock || !Idtienda){
+        if(!Nombre || !Descripcion || !Precio || !Stock || !IdTienda){
             throw new Error ('Todos los campos son requeridos.')
         }
 
@@ -22,7 +22,7 @@ const productoService = {
 
     ListarProductos: async function (){
         try {
-            const productos = await Producto.findAll();
+            const [productos] = await Producto.findAll();
             return productos;
         } catch (error) {
             throw new Error ('error al obtener productos ' + error.message);
@@ -42,9 +42,9 @@ const productoService = {
 
     ActualizarProducto: async function (id, ProductoData) {
 
-        const{Nombre, Descripcion, Precio, Stock, Idtienda} = ProductoData;
+        const{Nombre, Descripcion, Precio, Stock, IdTienda} = ProductoData;
 
-        if (!Nombre || !Descripcion|| !Precio || !Stock || !Idtienda) {
+        if (!Nombre || !Descripcion|| !Precio || !Stock || !IdTienda) {
             throw new Error('Todos los campos son requeridos para la actualización.');
         }
 
