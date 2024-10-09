@@ -41,11 +41,10 @@ controller.ListarProductosIdC = async function (req, res) {
 }
 
 controller.ActualizarProductoC = async function (req, res) {
-    const  id  = req.params.id;
-    const ProductoData = req.body;
-
+    const  { id }  = req.params;
+    const ProductoData = req.body
     try {
-        await producto.ActualizarProducto(id, ProductoData);
+        const result = await producto.ActualizarProducto(id, ProductoData);
         res.status(200).json(result);
     } catch (error) {
         res.status(500).json({ error: error.message });

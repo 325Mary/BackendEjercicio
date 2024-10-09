@@ -41,6 +41,8 @@ const productoService = {
     },
 
     ActualizarProducto: async function (id, ProductoData) {
+        console.log(id)
+        console.log(ProductoData)
 
         const{Nombre, Descripcion, Precio, Stock, IdTienda} = ProductoData;
 
