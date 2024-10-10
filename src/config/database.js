@@ -1,4 +1,7 @@
-const mysql = require('mysql2');
+//, este archivo es responsable de establecer la conexión con la base de datos MySQL y
+// proporcionar una interfaz para ejecutar consultas SQL desde otros archivos del proyecto.
+
+const mysql = require('mysql2'); //módulo mysql2 de Node.js
 
 const pool = mysql.createPool({
     host: 'localhost',
@@ -18,4 +21,4 @@ pool.query('SELECT 1 + 1 AS solution', function(err, rows){
     
 });
 
-module.exports = pool.promise();
+module.exports = pool.promise();//Esto permite que otros archivos del proyecto puedan utilizar la conexión a la base de datos.

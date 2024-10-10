@@ -1,6 +1,7 @@
-const {CrearRol, ActulizarRol, ListarUsuRol, EditRol} = require('../services/rol.services');
+const {EliminarRol, CrearRol, ActulizarRol, ListarUsuRol, EditRol} = require('../services/rol.services');
 const validarCamposRequeridos = require('../middleware/camposRequeridos');
 const controller = {};
+
 
 controller.EditRolC = async function (req, res) {
     try{
@@ -14,6 +15,18 @@ controller.EditRolC = async function (req, res) {
         res.status(500).json({error: error.message});
     }
 }
+
+controller.EliminarRolC = async function (req, res) {
+    try{
+        const idRol = req.params.id;
+        await EliminarRol(idRol)
+        return res.status(204).json({message: 'Rol eliminado exitosamente'});
+    }
+    catch (error){
+        res.status(500).json({error: error.message});
+    }
+}
+
 
 // controller.ActulizarRolC = async function (req, res) {
 //     try{

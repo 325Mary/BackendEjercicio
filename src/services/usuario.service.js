@@ -30,9 +30,8 @@ const ListarUsuarios = async function (){
         throw error;
     }
 }
-const CrearUsuario = async function (UsuarioData) {
-    
 
+const CrearUsuario = async function (UsuarioData) {
     try {
         if (!UsuarioData) {
             throw new Error('Todos los campos son requeridos');
@@ -41,7 +40,7 @@ const CrearUsuario = async function (UsuarioData) {
         if(!Password){
             throw new Error('La identificación no puede estar vacía para crear una contraseña.');
         }
-        const PasswordEncriptado = await bcrypt.hash(Password, 10);
+        const PasswordEncriptado = await bcrypt.hash(Password, 10);//toma dos parámetros: la contraseña a encriptar y la cantidad de iteraciones a realizar para encriptarla
         UsuarioData.contrasena = PasswordEncriptado;
 
         const usuarioCreado = await Usuario.create(UsuarioData);
@@ -58,14 +57,14 @@ const CrearToken =  async function (user){
     console.log(payload);
     const secret = process.env.JWT_SECRET;
     const options = {expiresIn: '3m'};
-    const token = jwt.sign(payload, secret, options);
+    const token = jwt.sign(payload, secret, options);//toma tres parámetros: el payload (información sobre el usuario), la clave secreta utilizada para firmar el token y las opciones de configuración del token.
     return token
 }
 
 
 const Login = async function (req, res) {
     try {
-        const { email, contrasena } = req.body;
+        const { email, contrasena } = req.body;     
         if (!email || !contrasena) {
             return res.status(400).json({ error: 'Credenciales necesarias' });
         }

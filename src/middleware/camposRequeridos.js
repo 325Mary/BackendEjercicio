@@ -1,3 +1,6 @@
+//este archivo es responsable de validar que todos los campos requeridos estén presentes en la solicitud 
+//HTTP antes de permitir que el control vuelva al siguiente middleware o al controlador.
+
 function validarCamposRequeridos(camposRequeridos) {
     return function(req, res, next) {
       const camposFaltantes = camposRequeridos.filter(campo => !req.body[campo]);

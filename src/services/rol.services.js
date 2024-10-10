@@ -17,7 +17,7 @@ const CrearRol = async function(rolData) {
 const ActulizarRol = async function(id, nuevoRol) {
     try{
         console.log(nuevoRol)
-        const rolActualizado = await RolUsuario.editRol(id, nuevoRol);
+        const rolActualizado = await RolUsuario.editRol(idR, nuevoRol);
         if (!rolActualizado){
             throw new Error('No se pudo actualizar el rol, o el rol no existe.');
         }
@@ -55,11 +55,23 @@ const ListarUsuRol = async function () {
     
 }
 
+const EliminarRol = async function(idRol) {
+    try{
+        await RolUsuario.deleteRol(idRol);
+        return { message: 'Rol eliminado exitosamente' };
+    }
+    catch (error) {
+        throw error;
+    }
+ 
+}
+
 module.exports = {
     CrearRol,
     ActulizarRol,
     ListarUsuRol,
-    EditRol
+    EditRol,
+    EliminarRol         
 }
 
 
